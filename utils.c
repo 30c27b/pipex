@@ -6,7 +6,7 @@
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 11:47:25 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 15:50:40 by ancoulon         ###   ########.fr       */
+/*   Updated: 2021/06/01 16:11:43 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	error_exit(t_pipex *pipex, char *errmsg)
 	fmt_fprint(2, errmsg);
 	fmt_fprint(2, "\n");
 	on_exit(pipex);
-	system("leaks pipex");
 	exit(EXIT_FAILURE);
 }
 
@@ -46,7 +45,6 @@ char	*error_not_found(t_pipex *pipex, char *bin)
 	fmt_fprint(2, bin);
 	fmt_fprint(2, "\n");
 	on_exit(pipex);
-	system("leaks pipex");
 	exit(EXIT_FAILURE);
 	return (NULL);
 }
@@ -78,7 +76,7 @@ t_pipex	parse_args(int argc, char **argv, char **envp)
 		error_exit(&pipex, strerror(errno));
 	pipex.cmd1 = argv[2];
 	pipex.cmd2 = argv[3];
-	pipex.outfd = open(argv[4], O_WRONLY | O_CREAT, 0777);
+	pipex.outfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (pipex.outfd < 0)
 		error_exit(&pipex, strerror(errno));
 	pipex.path = get_env_path(&pipex, envp);

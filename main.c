@@ -6,7 +6,7 @@
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 11:43:55 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 16:00:01 by ancoulon         ###   ########.fr       */
+/*   Updated: 2021/06/01 16:06:41 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,4 @@ int	main(int argc, char **argv, char **envp)
 	cmd1(&pipex);
 	cmd2(&pipex);
 	free(pipex.path);
-	system("leaks pipex");
 }
