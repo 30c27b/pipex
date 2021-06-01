@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   llst_pop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/02/25 11:54:23 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/08 10:26:32 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "carbon/llst.h"
+#include <stdio.h>
 
-#include <stddef.h>
-#include <stdint.h>
-
-typedef struct s_pipex
+t_llst	*llst_pop(t_llst **lst)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	t_llst	*node;
+	t_llst	*tail;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	if (!lst || !*lst)
+		return (NULL);
+	node = *lst;
+	if (!node->next)
+	{
+		*lst = NULL;
+		return (node);
+	}
+	while (node && node->next && node->next->next)
+		node = node->next;
+	tail = node->next;
+	node->next = NULL;
+	return (tail);
+}

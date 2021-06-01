@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   str_len.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/01/14 19:01:28 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/08 10:31:53 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "carbon/str.h"
 
-#include <stddef.h>
-#include <stdint.h>
-
-typedef struct s_pipex
+size_t	str_len(char *s)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	size_t	i;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	i = 0;
+	if (s)
+		while (s[i])
+			i++;
+	return (i);
+}

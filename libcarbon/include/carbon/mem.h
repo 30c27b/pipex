@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   mem.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/01/14 13:46:09 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/08 10:23:12 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef MEM_H
+# define MEM_H
 
-#include <stddef.h>
-#include <stdint.h>
+# include <stddef.h>
+# include <stdint.h>
 
-typedef struct s_pipex
-{
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+void	*mem_set(void *p, uint8_t c, size_t size);
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
+void	*mem_setalloc(size_t size, uint8_t c);
+
+void	*mem_calloc(size_t size);
+
+void	*mem_cpy(void *d, void *s, size_t n);
+
+int		mem_cmp(void *p1, void *p2, size_t n);
 
 #endif

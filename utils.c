@@ -6,41 +6,50 @@
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 11:47:25 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/05/31 17:33:50 by ancoulon         ###   ########.fr       */
+/*   Updated: 2021/06/01 14:56:33 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "carbon.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
 
-size_t	str_len(char *str)
-{
-	size_t	i;
-	
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
-
-void	str_print(int fd, char *str)
-{
-	write(fd, str, str_len(str));
-}
-
 void	error_exit(char *errmsg)
 {
-	str_print(2, "Error: ");
-	str_print(2, errmsg);
-	str_print(2, "\n");
+	fmt_fprint(2, "pipex: ");
+	fmt_fprint(2, errmsg);
+	fmt_fprint(2, "\n");
 	exit(EXIT_FAILURE);
 }
 
-t_pipex	parse_args(int argc, char **argv)
+void	error_not_found(char *bin)
+{
+	fmt_fprint(2, "pipex: command not found: ");
+	fmt_fprint(2, bin);
+	fmt_fprint(2, "\n");
+	exit(EXIT_FAILURE);
+}
+
+static char	*get_env_path(char **envp)
+{
+	size_t	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (str_ncmp(envp[i], "PATH=", 5) == 0)
+			return(str_sub(envp[i], 5, str_len(envp[i])));
+		i++;
+	}
+	error_exit("The PATH environement variable is not defined.");
+	return (NULL);
+}
+
+t_pipex	parse_args(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
@@ -54,5 +63,8 @@ t_pipex	parse_args(int argc, char **argv)
 	pipex.outfd = open(argv[4], O_WRONLY | O_CREAT);
 	if (pipex.outfd < 0)
 		error_exit(strerror(errno));
+	pipex.path = get_env_path(envp);
+	if (pipex.path == NULL)
+				error_exit(strerror(errno));
 	return (pipex);
 }

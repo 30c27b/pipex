@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   llst_len.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/03/17 15:31:11 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/17 15:32:56 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "carbon/llst.h"
 
-#include <stddef.h>
-#include <stdint.h>
-
-typedef struct s_pipex
+size_t	llst_len(t_llst *node)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	size_t	i;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	i = 0;
+	while (node)
+	{
+		i++;
+		node = node->next;
+	}
+	return (i);
+}

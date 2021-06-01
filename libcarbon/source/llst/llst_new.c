@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   llst_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/01/14 19:38:06 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/08 10:26:27 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "carbon/llst.h"
 
-#include <stddef.h>
-#include <stdint.h>
+#include "carbon/mem.h"
 
-typedef struct s_pipex
+t_llst	*llst_new(void *data)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	t_llst	*node;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	node = mem_setalloc(sizeof(t_llst), 0);
+	if (node)
+		node->data = data;
+	return (node);
+}

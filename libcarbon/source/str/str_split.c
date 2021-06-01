@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   str_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 17:18:49 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/05/31 17:20:47 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/02/23 18:47:43 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/05/27 12:32:07 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include <unistd.h>
+#include "carbon/str.h"
+
+#include "carbon/mem.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static size_t	token_counter(char *s, char c)
 {

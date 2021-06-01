@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   str_join.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/02/24 14:55:51 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/03/08 10:28:12 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "carbon/str.h"
 
-#include <stddef.h>
-#include <stdint.h>
+#include "carbon/mem.h"
 
-typedef struct s_pipex
+char	*str_join(char *s1, char *s2)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	char	*str;
+	size_t	len;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	len = str_len(s1) + str_len(s2);
+	str = (char *)mem_calloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	str_cat(str, s1);
+	str_cat(str, s2);
+	return (str);
+}

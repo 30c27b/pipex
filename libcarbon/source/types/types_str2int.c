@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   types_str2int.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancoulon <ancoulon@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 11:43:36 by ancoulon          #+#    #+#             */
-/*   Updated: 2021/06/01 14:56:42 by ancoulon         ###   ########.fr       */
+/*   Created: 2021/03/04 10:48:29 by ancoulon          #+#    #+#             */
+/*   Updated: 2021/05/28 13:20:15 by ancoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-
-#include <stddef.h>
+#include "carbon/types.h"
 #include <stdint.h>
 
-typedef struct s_pipex
+int64_t	types_str2int(char *s)
 {
-	int		infd;
-	int		outfd;
-	char	*cmd1;
-	char	*cmd2;
-	int		pipefd[2];
-	char	**envp;
-	char	*path;
-}	t_pipex;
+	int		i;
+	int64_t	nbr;
+	int		sign;
 
-void	error_exit(char *errmsg);
-void	error_not_found(char *bin);
-t_pipex	parse_args(int argc, char **argv, char **envp);
-
-#endif
+	i = 0;
+	nbr = 0;
+	sign = 1;
+	if (s[i] == '+')
+		i++;
+	else if (s[i] == '-' && s[i++])
+		sign *= -1;
+	while (s[i] && s[i] >= '0' && s[i] <= '9')
+	{
+		if (nbr < 0)
+		{
+			if (sign > 0)
+				return (-1);
+			return (0);
+		}
+		nbr = (nbr * 10) + (s[i] - '0');
+		i++;
+	}
+	return (sign * nbr);
+}
